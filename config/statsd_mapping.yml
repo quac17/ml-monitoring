@@ -1,0 +1,39 @@
+# ============================================
+# StatsD Exporter - Airflow metrics mapping
+# ============================================
+# Chuyển metric StatsD từ Airflow sang format Prometheus
+# Tham khảo: https://github.com/prometheus/statsd_exporter
+
+mappings:
+  # Airflow DAG metrics
+  - match: "airflow.dag_processing.*"
+    match_type: glob
+    name: "airflow_dag_processing"
+    labels:
+      metric: "$0"
+  - match: "airflow.dag.*"
+    match_type: glob
+    name: "airflow_dag"
+    labels:
+      metric: "$0"
+  - match: "airflow.task.*"
+    match_type: glob
+    name: "airflow_task"
+    labels:
+      metric: "$0"
+  - match: "airflow.pool.*"
+    match_type: glob
+    name: "airflow_pool"
+    labels:
+      metric: "$0"
+  - match: "airflow.scheduler.*"
+    match_type: glob
+    name: "airflow_scheduler"
+    labels:
+      metric: "$0"
+  # Catch-all cho các metric Airflow khác
+  - match: "airflow.*"
+    match_type: glob
+    name: "airflow_metric"
+    labels:
+      name: "$0"
